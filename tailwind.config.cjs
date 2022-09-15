@@ -10,7 +10,7 @@ module.exports = {
           'pBlue': '#6db5fd',
           'pPurple': '#a67dff',
           'pPink': '#ff7b9c',
-          'pRed': '#ff7b9c',
+          'pRed': '#ff6961',
           'pOrange': '#ff9c7b',
           'pYellow': '#ffd67b',
           'pGreen': '#00dfb1',
@@ -21,6 +21,7 @@ module.exports = {
           'pBlack': '#121418',
 
           'pdBlue': '#4ea1fd',
+          'pdRed': 'rgba(255,46,35,0.7)',
           'pdPurple': '#c699fc',
           'pdOrange': '#fdcf54',
           'pdYellow': '#f6fb98',

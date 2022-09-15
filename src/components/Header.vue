@@ -30,6 +30,12 @@
         </span>
         </a>
 
+        <a href="/youtubedownloader" class="relative text-pGray font-medium leading-6 transition duration-150 ease-out hover:text-pBlue" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false">
+          <span class="block">YouTube Downloader</span>
+          <span class="absolute bottom-0 left-0 inline-block w-full h-0.5 -mb-1 overflow-hidden">
+        </span>
+        </a>
+
 
       </nav>
     </div>

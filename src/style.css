@@ -8,3 +8,9 @@
     font-family: "Rubik", sans-serif;
     user-select: none;
 }
+
+@layer transition {
+    .transition {
+        transition: all 0.3s ease-in-out;
+    }
+}
