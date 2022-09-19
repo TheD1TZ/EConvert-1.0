@@ -28,7 +28,7 @@ const routes = [
         component: AudioConverter
     },
     {
-        path: '/youtubeconverter',
+        path: '/youtubedownloader',
         name: 'YoutubeConverter',
         component: YoutubeDownloader
     }

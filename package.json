@@ -11,8 +11,13 @@
   "dependencies": {
     "@headlessui/vue": "^1.7.1",
     "@heroicons/vue": "^2.0.11",
+    "m3u8stream": "^0.8.6",
+    "miniget": "^4.2.2",
+    "sax": "^1.2.4",
     "vue": "^3.2.37",
-    "vue-router": "^4.0.13"
+    "vue-router": "^4.0.13",
+    "vuex": "^4.0.2",
+    "ytdl-core": "^4.11.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.1.0",
