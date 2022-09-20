@@ -1,9 +1,9 @@
 <template>
-  <section class="relative w-full px-8 text-gray-700 p-2 bg-pGrayDark body-font" data-tails-scripts="//unpkg.com/alpinejs">
+  <section class="relative w-full px-8 text-gray-700 p-2 bg-pGrayDark body-font">
     <div class="container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl">
-      <span class="w-full text-transparent text-2xl font-extrabold bg-clip-text bg-gradient-to-r from-pdGreen to-pdBlue">EConvert</span>
+      <a class="w-full text-transparent text-2xl font-extrabold bg-clip-text bg-pdGreen">EConvert</a>
 
-      <nav class="top-0 left-0 z-0 flex items-center justify-center w-full h-full py-5 -ml-0 space-x-5 text-base md:-ml-5 md:py-0 md:absolute">
+      <nav class="top-0 left-0 z-0 flex items-center justify-center w-full h-full py-5 -ml-0 space-x-5 text-base md:-ml-5 md:py-0 md:absolute" >
 
 
         <a href="/" class="relative text-pGray font-medium leading-6 transition duration-150 ease-out hover:text-pBlue" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false">

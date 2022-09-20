@@ -6,7 +6,7 @@
 
 :root {
     font-family: "Rubik", sans-serif;
-    user-select: none;
+    /*user-select: none;*/
 }
 
 @layer transition {
