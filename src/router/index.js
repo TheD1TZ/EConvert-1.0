@@ -4,6 +4,7 @@ import ImageConverter from "../views/ImageConverter.vue";
 import VideoConverter from "../views/VideoConverter.vue";
 import AudioConverter from "../views/AudioConverter.vue";
 import YoutubeDownloader from "../views/YoutubeDownloader.vue";
+import Converter from "../views/v2/Converter.vue";
 
 
 const routes = [
@@ -31,6 +32,11 @@ const routes = [
         path: '/youtubedownloader',
         name: 'YoutubeConverter',
         component: YoutubeDownloader
+    },
+    {
+        path: '/v2/converter',
+        name: 'V2 Converter',
+        component: Converter
     }
 ]
 

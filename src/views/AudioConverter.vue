@@ -93,13 +93,6 @@ import { createFFmpeg, fetchFile } from "@ffmpeg/ffmpeg";
 import { defineComponent } from "vue";
 import { downloadFile } from "../Utils.js";
 
-const ffmpeg = createFFmpeg({
-  log: true,
-  mainName: 'main',
-  corePath: 'https://unpkg.com/@ffmpeg/core-st@0.11.1/dist/ffmpeg-core.js',
-});
-
-
 export default defineComponent({
   name: "App",
   data() {
@@ -116,6 +109,12 @@ export default defineComponent({
   },
   methods:{
     async transcode(file_url, name, file_type, original_file_type) {
+      const ffmpeg = createFFmpeg({
+        log: true,
+        mainName: 'main',
+        corePath: 'https://unpkg.com/@ffmpeg/core-st@0.11.1/dist/ffmpeg-core.js',
+      });
+
       if (file_type === original_file_type) {
         alert("You can't convert to the same file type");
         return;
@@ -140,6 +139,8 @@ export default defineComponent({
       );
 
       downloadFile(url, "EConvert-" + name.split('.')[0] + "." + file_type);
+
+      ffmpeg.exit();
 
       this.message = "Start Convert";
     },
