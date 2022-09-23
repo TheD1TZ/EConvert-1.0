@@ -5,11 +5,11 @@ import vue from '@vitejs/plugin-vue'
 // https://vitejs.dev/config/
 export default defineConfig({
   optimizeDeps: {
-    include: ['@ffmpeg/ffmpeg', '@ffmpeg/core', 'fs'],
+    include: ['@ffmpeg/ffmpeg', '@ffmpeg/core', "headlessui"],
   },
   build: {
     commonjsOptions: {
-      include: ['convert-audio', /node_modules/]
+      include: ['@ffmpeg/ffmpeg', '@ffmpeg/core', /node_modules/, "headlessui"]
     }
   },
   resolve: {

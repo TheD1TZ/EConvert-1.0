@@ -17,13 +17,6 @@
                      type="file"
                      accept="audio/*"
                      @change="uploadFile">
-              FILE TYPE: {{ FILE_TYPE }}
-              SIZE: {{ FILE_SIZE }}MB
-              <br>
-              Link: {{ FILE_URL }}
-              <br>
-              File Name: {{ FILE_NAME }}
-
             </div>
 
             <div class="grid grid-cols-2 gap-5">
@@ -44,12 +37,17 @@
                   </option>
                 </select>
               </div>
-              <div class="grid gap-2 grid-cols-1 bg-pdGray w-full p-2 py-3 rounded-xl">
+              <div class="grid gap-2 grid-cols-1 bg-pdGray w-full p-2 py-3 rounded-xl transition">
                 <h2 class="text-pBlack text-lg px-1">Start Convert</h2>
-                <button type="button" @click="transcode(FILE_URL, FILE_NAME, FILE_TYPE, ORIGINAL_FILE_TYPE)" class="py-2 px-4 bg-pGreen hover:bg-pdGreen text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md rounded-lg ">
-                  {{ message }}
 
-                </button>
+                  <button type="button" @click="transcode(FILE_URL, FILE_NAME, FILE_TYPE, ORIGINAL_FILE_TYPE)" class="flex w-full justify-center py-2 px-4 bg-pGreen hover:bg-pdGreen text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md rounded-lg ">
+                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" :class="isLoading ? '' : 'hidden'">
+                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    {{ message }}
+
+                  </button>
               </div>
             </div>
           </div>
@@ -97,6 +95,8 @@ import { downloadFile } from "../Utils.js";
 
 const ffmpeg = createFFmpeg({
   log: true,
+  mainName: 'main',
+  corePath: 'https://unpkg.com/@ffmpeg/core-st@0.11.1/dist/ffmpeg-core.js',
 });
 
 
@@ -111,16 +111,18 @@ export default defineComponent({
       FILE_TYPE: "wav",
       FILE: "",
       message: "Start Convert",
+      isLoading: false,
     };
   },
   methods:{
     async transcode(file_url, name, file_type, original_file_type) {
       if (file_type === original_file_type) {
-        alert("Please select a different file type");
+        alert("You can't convert to the same file type");
         return;
       }
 
       this.message = "Loading...";
+      this.isLoading = true;
       if (!ffmpeg.isLoaded()) {
         await ffmpeg.load();
       }
@@ -129,6 +131,7 @@ export default defineComponent({
       await ffmpeg.run('-i', name, 'EConvert-' + name + '.' + file_type);
 
       this.message = "Done!";
+      this.isLoading = false;
 
       const data = ffmpeg.FS("readFile", "EConvert-" + name + "." + file_type);
 
@@ -136,10 +139,7 @@ export default defineComponent({
           new Blob([data.buffer], { type: "audio/" + file_type })
       );
 
-      console.log(url);
-
       downloadFile(url, "EConvert-" + name.split('.')[0] + "." + file_type);
-
 
       this.message = "Start Convert";
     },
