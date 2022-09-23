@@ -16,11 +16,13 @@
               <input class="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white file:bg-pGreen file:text-white file:font-bold file:py-2 file:px-4 file:border-0 file:rounded-md"
                      type="file"
                      accept="audio/*"
-                     @change="convertAudio(this)">
-              FILE TYPE: {{ ORIGINAL_TYPE }}
-              SIZE: {{ AUDIO_SIZE }}kb
+                     @change="uploadFile">
+              FILE TYPE: {{ FILE_TYPE }}
+              SIZE: {{ FILE_SIZE }}MB
               <br>
-              Link: {{ AUDIO_URL }}
+              Link: {{ FILE_URL }}
+              <br>
+              File Name: {{ FILE_NAME }}
 
             </div>
 
@@ -44,8 +46,9 @@
               </div>
               <div class="grid gap-2 grid-cols-1 bg-pdGray w-full p-2 py-3 rounded-xl">
                 <h2 class="text-pBlack text-lg px-1">Start Convert</h2>
-                <button type="button" @click="downloadFile(this.convertedAudioDataObj)" class="py-2 px-4 bg-pGreen hover:bg-pdGreen text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md rounded-lg ">
-                  Add to Queue
+                <button type="button" @click="transcode(FILE_URL, FILE_NAME, FILE_TYPE, ORIGINAL_FILE_TYPE)" class="py-2 px-4 bg-pGreen hover:bg-pdGreen text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md rounded-lg ">
+                  {{ message }}
+
                 </button>
               </div>
             </div>
@@ -88,14 +91,72 @@
 
 
 <script>
+import { createFFmpeg, fetchFile } from "@ffmpeg/ffmpeg";
+import { defineComponent } from "vue";
+import { downloadFile } from "../Utils.js";
 
-export default {
-  name: "AudioConverter",
+const ffmpeg = createFFmpeg({
+  mainName: 'main',
+  corePath: 'https://unpkg.com/@ffmpeg/core-st@0.11.1/dist/ffmpeg-core.js',
+  log: true,
+});
+
+
+export default defineComponent({
+  name: "App",
   data() {
     return {
+      FILE_URL: "",
+      FILE_NAME: "",
+      FILE_SIZE: "",
+      ORIGINAL_FILE_TYPE: "",
+      FILE_TYPE: "wav",
+      FILE: "",
+      message: "Start Convert",
+    };
+  },
+  methods:{
+    async transcode(file_url, name, file_type, original_file_type) {
+      if (file_type === original_file_type) {
+        alert("Please select a different file type");
+        return;
+      }
+
+      this.message = "Loading...";
+      if (!ffmpeg.isLoaded()) {
+        await ffmpeg.load();
+      }
+      ffmpeg.FS("writeFile", name, await fetchFile(file_url));
+
+      await ffmpeg.run('-i', name, 'EConvert-' + name + '.' + file_type);
+
+      this.message = "Done!";
+
+      const data = ffmpeg.FS("readFile", "EConvert-" + name + "." + file_type);
+
+      const url = URL.createObjectURL(
+          new Blob([data.buffer], { type: "audio/" + file_type })
+      );
+
+      console.log(url);
+
+      downloadFile(url, "EConvert-" + name.split('.')[0] + "." + file_type);
+
+
+      this.message = "Start Convert";
+    },
+    uploadFile(e) {
+      const file = e.target.files[0];
+      this.FILE = file;
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = e =>{
+        this.FILE_URL = URL.createObjectURL(file);
+        this.FILE_NAME = file.name;
+        this.FILE_SIZE = file.size / 1000000;
+        this.ORIGINAL_FILE_TYPE = file.name.split('.')[1];
+      };
     }
   },
-  methods: {
-  },
-}
+});
 </script>

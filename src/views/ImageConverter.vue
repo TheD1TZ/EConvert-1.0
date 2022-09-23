@@ -80,6 +80,9 @@
                   <option value="svg">
                     SVG
                   </option>
+                  <option value="jfif">
+                    JFIF
+                  </option>
                 </select>
               </div>
               <div class="grid gap-2 grid-cols-1 bg-pdGray w-full p-2 py-3 rounded-xl">
