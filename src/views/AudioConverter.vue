@@ -96,8 +96,6 @@ import { defineComponent } from "vue";
 import { downloadFile } from "../Utils.js";
 
 const ffmpeg = createFFmpeg({
-  mainName: 'main',
-  corePath: 'https://unpkg.com/@ffmpeg/core-st@0.11.1/dist/ffmpeg-core.js',
   log: true,
 });
 
