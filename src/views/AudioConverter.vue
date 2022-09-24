@@ -99,7 +99,6 @@ export default defineComponent({
     return {
       FILE_URL: "",
       FILE_NAME: "",
-      FILE_SIZE: "",
       ORIGINAL_FILE_TYPE: "",
       FILE_TYPE: "wav",
       FILE: "",
@@ -110,7 +109,7 @@ export default defineComponent({
   methods:{
     async transcode(file_url, name, file_type, original_file_type) {
       const ffmpeg = createFFmpeg({
-        log: true,
+        log: false,
         mainName: 'main',
         corePath: 'https://unpkg.com/@ffmpeg/core-st@0.11.1/dist/ffmpeg-core.js',
       });
@@ -122,24 +121,34 @@ export default defineComponent({
 
       this.message = "Loading...";
       this.isLoading = true;
+
+      // Loads ffmpeg-core
       if (!ffmpeg.isLoaded()) {
         await ffmpeg.load();
       }
+
+      this.message = "Converting...";
+
+      // Fetches the file
       ffmpeg.FS("writeFile", name, await fetchFile(file_url));
 
+      // Runs the FFMpeg command
       await ffmpeg.run('-i', name, 'EConvert-' + name + '.' + file_type);
 
       this.message = "Done!";
       this.isLoading = false;
 
+      // Reads the result
       const data = ffmpeg.FS("readFile", "EConvert-" + name + "." + file_type);
 
+      // Downloads the result
       const url = URL.createObjectURL(
           new Blob([data.buffer], { type: "audio/" + file_type })
       );
 
       downloadFile(url, "EConvert-" + name.split('.')[0] + "." + file_type);
 
+      // Frees the memory
       ffmpeg.exit();
 
       this.message = "Start Convert";
@@ -152,7 +161,6 @@ export default defineComponent({
       reader.onload = e =>{
         this.FILE_URL = URL.createObjectURL(file);
         this.FILE_NAME = file.name;
-        this.FILE_SIZE = file.size / 1000000;
         this.ORIGINAL_FILE_TYPE = file.name.split('.')[1];
       };
     }
