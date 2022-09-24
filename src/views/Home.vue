@@ -4,9 +4,9 @@
   <section class="h-auto bg-pGray p-32">
     <div class="px-10 py-24 mx-auto max-w-7xl">
       <div class="w-full mx-auto text-left md:text-center">
-        <h1 class="mb-6 text-5xl font-extrabold leading-none max-w-5xl mx-auto tracking-normal sm:text-6xl md:text-6xl lg:text-7xl md:tracking-tight">
-          <span class="w-full text-transparent text-pdGreen lg:inline">Clean and Easy Converter</span>
-          <br class="lg:block hidden text-pBlack"> for all your files.
+        <h1 class="mb-6 text-5xl font-extrabold max-w-5xl mx-auto sm:text-6xl md:text-6xl lg:text-7xl md:tracking-tight">
+          <span class="w-full text-pdGreen lg:inline">Clean and Easy Converter</span>
+          <br class="lg:block text-pBlack"> for all your files.
         </h1>
 
         <p class="px-0 mb-6 text-lg text-pBlack md:text-xl lg:px-16">
