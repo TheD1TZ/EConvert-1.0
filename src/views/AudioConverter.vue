@@ -146,7 +146,7 @@ export default defineComponent({
           new Blob([data.buffer], { type: "audio/" + file_type })
       );
 
-      downloadFile(url, "EConvert-" + name.split('.')[0] + "." + file_type);
+      downloadFile(url, "EConvert-" + name.split('.' + original_file_type )[0] + "." + file_type);
 
       // Frees the memory
       ffmpeg.exit();

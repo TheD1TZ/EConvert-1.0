@@ -12,42 +12,42 @@
           <div class="grid grid-cols-1 gap-5">
 
             <div class="grid gap-2 grid-cols-1 bg-pdGray p-2 py-3 rounded-xl">
-              <h2 class="text-pBlack text-lg px-1">Image</h2>
+              <h2 class="text-pBlack text-lg px-1">Video</h2>
               <input class="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white file:bg-pGreen file:text-white file:font-bold file:py-2 file:px-4 file:border-0 file:rounded-md"
                      type="file"
                      accept="video/*"
-                     @change="">
+                     @change="uploadFile">
 
             </div>
 
             <div class="grid grid-cols-2 gap-5">
 
-              <div class="grid gap-2 grid-cols-1 bg-pdGray p-2 py-3 rounded-xl">
-                <h2 class="text-pBlack text-lg px-1">Compression</h2>
-                <select v-model="COMPRESS" class="block w-52 text-gray-700 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm" name="compression">
-                  <option value="no-comp">
-                    No Compression
-                  </option>
-                  <option value="low-comp">
-                    Low Compression
-                  </option>
-                  <option value="mid-comp">
-                    Medium Compression
-                  </option>
-                  <option value="high-comp">
-                    High Compression
-                  </option>
-                </select>
-              </div>
+              <!--            <div class="grid gap-2 grid-cols-1 bg-pdGray p-2 py-3 rounded-xl">-->
+              <!--              <h2 class="text-pBlack text-lg px-1">Compression</h2>-->
+              <!--                <select v-model="COMPRESS" class="block w-52 text-gray-700 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm" name="compression">-->
+              <!--                  <option value="no-comp">-->
+              <!--                    No Compression-->
+              <!--                  </option>-->
+              <!--                  <option value="low-comp">-->
+              <!--                    Low Compression-->
+              <!--                  </option>-->
+              <!--                  <option value="mid-comp">-->
+              <!--                    Medium Compression-->
+              <!--                  </option>-->
+              <!--                  <option value="high-comp">-->
+              <!--                    High Compression-->
+              <!--                  </option>-->
+              <!--                </select>-->
+              <!--            </div>-->
 
-              <div class="grid gap-2 grid-cols-1 bg-pdGray p-2 py-3 rounded-xl">
-                <h2 class="text-pBlack text-lg px-1">Resize</h2>
-                <div class="grid grid-cols-3 gap-2 px-2">
-                  <input class="rounded-lg outline-none text-center" type="text" title="ballz" v-model="IMAGEX" placeholder="x">
-                  <input class="rounded-lg outline-none text-center" type="text" v-model="IMAGEY" placeholder="y">
-                  <button class="rounded-md text-center bg-pBlue hover:bg-pdBlue text-white py-2 px-4" @click="resetImageSize" >Reset</button>
-                </div>
-              </div>
+              <!--            <div class="grid gap-2 grid-cols-1 bg-pdGray p-2 py-3 rounded-xl">-->
+              <!--              <h2 class="text-pBlack text-lg px-1">Resize</h2>-->
+              <!--              <div class="grid grid-cols-3 gap-2 px-2">-->
+              <!--                <input class="rounded-lg outline-none text-center" type="text" title="ballz" v-model="IMAGEX" placeholder="x">-->
+              <!--                <input class="rounded-lg outline-none text-center" type="text" v-model="IMAGEY" placeholder="y">-->
+              <!--                <button class="rounded-md text-center bg-pBlue hover:bg-pdBlue text-white py-2 px-4" @click="resetImageSize" >Reset</button>-->
+              <!--              </div>-->
+              <!--            </div>-->
 
             </div>
 
@@ -55,22 +55,43 @@
             <div class="grid grid-cols-2 gap-5">
               <div class="grid gap-2 grid-cols-1 bg-pdGray w-full p-2 py-3 rounded-xl">
                 <h2 class="text-pBlack text-lg px-1">File Type</h2>
-                <select class="block w-52 text-gray-700 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" name="compression">
-                  <option value="jpeg">
+                <select class="block w-52 text-gray-700 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                        name="compression"
+                        v-model="FILE_TYPE">
+                  <option value="mp4">
                     MP4
                   </option>
-                  <option value="png">
-                    WEBM
-                  </option>
-                  <option value="gif">
+                  <option value="m4a">
                     M4A
                   </option>
+                  <option value="mov">
+                    MOV
+                  </option>
+                  <option value="gif">
+                    GIF
+                  </option>
+                  <option value="mkv">
+                    MKV
+                  </option>
+                  <option value="avi">
+                    AVI
+                  </option>
+                  <option value="webm">
+                    WEBM
+                  </option>
+
                 </select>
               </div>
-              <div class="grid gap-2 grid-cols-1 bg-pdGray w-full p-2 py-3 rounded-xl">
+              <div class="grid gap-2 grid-cols-1 bg-pdGray w-full p-2 py-3 rounded-xl transition">
                 <h2 class="text-pBlack text-lg px-1">Start Convert</h2>
-                <button type="button" @click="" class="py-2 px-4 bg-pGreen hover:bg-pdGreen text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md rounded-lg ">
-                  Add to Queue
+
+                <button type="button" @click="transcode(FILE_URL, FILE_NAME, FILE_TYPE, ORIGINAL_FILE_TYPE)" class="flex w-full justify-center py-2 px-4 bg-pGreen hover:bg-pdGreen text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md rounded-lg ">
+                  <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" :class="isLoading ? '' : 'hidden'">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  {{ message }}
+
                 </button>
               </div>
             </div>
@@ -113,15 +134,81 @@
 
 
 <script>
+import { createFFmpeg, fetchFile } from "@ffmpeg/ffmpeg";
+import { defineComponent } from "vue";
+import { downloadFile } from "../Utils.js";
 
-export default {
+export default defineComponent({
   name: "VideoConverter",
   data() {
     return {
+      FILE_URL: "",
+      FILE_NAME: "",
+      ORIGINAL_FILE_TYPE: "",
+      FILE_TYPE: "mp4",
+      FILE: "",
+      message: "Start Convert",
+      isLoading: false,
+    };
+  },
+  methods:{
+    async transcode(file_url, name, file_type, original_file_type) {
+      const ffmpeg = createFFmpeg({
+        log: true,
+        mainName: 'main',
+        corePath: 'https://unpkg.com/@ffmpeg/core-st@0.11.1/dist/ffmpeg-core.js',
+      });
+
+      if (file_type === original_file_type) {
+        alert("You can't convert to the same file type");
+        return;
+      }
+
+      this.message = "Loading...";
+      this.isLoading = true;
+
+      // Loads ffmpeg-core
+      if (!ffmpeg.isLoaded()) {
+        await ffmpeg.load();
+      }
+
+      this.message = "Converting...";
+
+      // Fetches the file
+      ffmpeg.FS("writeFile", name, await fetchFile(file_url));
+
+      // Runs the FFMpeg command
+      await ffmpeg.run('-i', name, 'EConvert-' + name + '.' + file_type);
+
+      this.message = "Done!";
+      this.isLoading = false;
+
+      // Reads the result
+      const data = ffmpeg.FS("readFile", "EConvert-" + name + "." + file_type);
+
+      // Downloads the result
+      const url = URL.createObjectURL(
+          new Blob([data.buffer], { type: "image/" + file_type })
+      );
+
+      downloadFile(url, "EConvert-" + name.split('.' + original_file_type )[0] + "." + file_type);
+
+      // Frees the memory
+      ffmpeg.exit();
+
+      this.message = "Start Convert";
+    },
+    uploadFile(e) {
+      const file = e.target.files[0];
+      this.FILE = file;
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = e =>{
+        this.FILE_URL = URL.createObjectURL(file);
+        this.FILE_NAME = file.name;
+        this.ORIGINAL_FILE_TYPE = file.name.split('.')[1];
+      };
     }
   },
-  methods: {
-
-  },
-}
+});
 </script>
