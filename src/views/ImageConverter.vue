@@ -76,6 +76,9 @@
                   <option value="bmp">
                     BMP
                   </option>
+                  <option value="ico">
+                    ICO
+                  </option>
                 </select>
               </div>
               <div class="grid gap-2 grid-cols-1 bg-pdGray w-full p-2 py-3 rounded-xl transition">
